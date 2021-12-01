@@ -2,8 +2,8 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from voteing.models import Voters
-from voteing.models import constituency,add_election as addelection
+from voteing.models import Voters,symbol,seat,Candidate,Parties
+from voteing.models import constituency,add_election as addelection,leader
 import cv2
 import os
 import numpy as np
@@ -30,7 +30,7 @@ def add_election(request):
         rul = request.POST['rules']
    
         print(etype , start,end,rul)     
-        elec=addelection(electiontype=etype,startdate=start,enddate=end,electionrules=rul)
+        elec=addelection(election_type=etype,start_date=start,end_date=end,election_rules=rul)
         elec.save()
       
     print(error)    
@@ -39,7 +39,14 @@ def add_election(request):
 
 
 def add_party(request):
-    return render(request ,'adminx/addpartyinfo.html')
+    x=leader.objects.all()
+    sym=symbol.objects.all()
+
+    
+ 
+    d={'data':x,'symbol':sym}
+    
+    return render(request ,'adminx/addpartyinfo.html',d)
 
 
 def add_Candidate(request):
@@ -47,7 +54,11 @@ def add_Candidate(request):
 
 
 def add_Seat(request):
-    return render(request ,'admin/addseat.html')
+    sea=seat.objects.all()
+    can=Candidate.objects.all()
+    par=Parties.objects.all()
+    d={'seat':sea,'candidate':can,'parties':par}
+    return render(request ,'adminx/addseat.html',d)
 
 
 
@@ -167,11 +178,15 @@ def camera_Open(request):
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                 cv2.rectangle(frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
                 cv2.putText(frame, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
-                attendance(name)
+                capture(name)
 
             cv2.imshow('Webcam', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+
+            keyCode = cv2.waitKey(1)
+
+            if cv2.getWindowProperty('Webcam', cv2.WND_PROP_VISIBLE) <1:
                 break
+
 
 
     cap.release()
@@ -189,8 +204,8 @@ def faceEncodings(images):
 
 
 
-def attendance(name):
-    with open('Attendence.csv', 'r+') as f:
+def capture(name):
+    with open('capture.csv', 'r+') as f:
         myDataList = f.readlines()
         nameList = []
         for line in myDataList:
@@ -210,3 +225,16 @@ def attendance(name):
 
 def show_Instructions(request):
     return render(request ,'voteing/instructions.html')
+
+
+
+
+
+# //admin
+
+def check_voter_reg(request):
+    return render(request , 'adminx/checkreg.html')
+
+
+def results(request):
+    return render(request , 'adminx/showresult.html')

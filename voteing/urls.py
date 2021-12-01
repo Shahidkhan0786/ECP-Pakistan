@@ -35,4 +35,9 @@ urlpatterns = [
     path('capture/' , views.capture ,name="capture"),
     path('open/' , views.camera_Open , name="open"),
     path('instructions/' ,views.show_Instructions , name="instructions"),
+
+
+    # //admin
+    path('chk_reg' , views.check_voter_reg , name="checkvoterreg"),
+    path('show-res',views.results, name="show-results"),
 ]

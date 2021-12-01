@@ -1,22 +1,20 @@
 {% extends "../index1.html" %}
 
-{% block title %}Add Election{% endblock %}
+{% block title %}Add Party{% endblock %}
 {% block content %}
 
 <div class="container p-5">
     <form>
         <div class="form-group">
             <label for="exampleInputPassword1">Party Name</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="">
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="name">
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Party Leader</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <select class="form-control" id="exampleFormControlSelect1" name="leader">
+              {% for i in data%}
+              <option value={{i}}>{{i}}</option>
+              {%endfor%}
             </select>
         </div>
     
@@ -27,9 +25,10 @@
             <div class="form-group">
               <label for="exampleFormControlFile1">Party Symbol</label>
               <select class="form-control" id="exampleFormControlSelect1">
-                <option>Pakistan Tehreek-e-Insaf</option>
-                <option>Pakistan Muslim League (N)</option>
-                
+                {% for s in symbol %}
+                <option value={{s}}>{{s}}</option>
+                {% endfor%}
+              
               </select>
             </div>
 
@@ -40,7 +39,7 @@
           
     
         
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn " style="background-color: green;color:white;">Submit</button>
     </form>
     </div>
 

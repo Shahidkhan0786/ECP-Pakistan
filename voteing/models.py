@@ -56,7 +56,7 @@ class seat(models.Model):
 class Parties(models.Model):
     party_Name=models.CharField(max_length=200,choices=PARTY_NAME)
     party_Leader=models.ForeignKey(leader ,on_delete=models.CASCADE)
-    party_Symbol=models.CharField(max_length=200,choices=SYMBOL_CHOICES)
+    party_Symbol=models.ForeignKey(symbol , on_delete=models.CASCADE)
     party_Overview=models.CharField(max_length=255)
 
 
@@ -64,10 +64,10 @@ class Parties(models.Model):
         return self.party_Name
 
 class add_election(models.Model):
-    electiontype=models.CharField(max_length=100,choices=ELECTION_TYPE)
-    startdate=models.DateField(null=True)
-    enddate=models.DateField(null=True)
-    electionrules=models.CharField(max_length=255)
+    election_type=models.CharField(max_length=100,choices=ELECTION_TYPE)
+    start_date=models.DateField(null=True)
+    end_date=models.DateField(null=True)
+    election_rules=models.CharField(max_length=255)
 
     def __str__(self):
         return self.election_type

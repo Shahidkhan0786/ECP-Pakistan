@@ -12,33 +12,29 @@
         <div class="form-group">
             <label for="exampleFormControlSelect1">Seat</label>
             <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              {%for s in seat%}
+              <option value={{s}}}>{{s}}</option>
+              {%endfor%}
             </select>
         </div>
 
         <div class="form-group">
             <label for="exampleFormControlSelect1">Candidate</label>
             <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              {%for c in candidate%}
+              <option value={{c}}>{{c}}</option>
+              {%endfor%}
+        
             </select>
         </div>
 
         <div class="form-group">
             <label for="exampleFormControlSelect1">Party</label>
             <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              {%for p in parties %}
+              <option value={{p}}>{{p}}</option>
+              {%endfor%}
+  
             </select>
         </div>
     
@@ -52,7 +48,7 @@
           
     
         
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn " style="background-color: green;color:white;">Add</button>
     </form>
     </div>
 
