@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+.main-nav{
+    background-color: green !important;
+}
+
+
+.img-fluid{
+    height: 100px;
+}
+.a a{
+    text-decoration: none;
+}

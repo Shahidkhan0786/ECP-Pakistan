@@ -1,0 +1,75 @@
+{% extends "../master.html" %}
+{% block title %}downloads{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container-fluid bg-warning">
+    <h2 class="text-center p-3">Contact Us</h2>
+</div>
+
+
+<div class="container p-5">
+
+    <div class="container p-5">
+      <div class="col-md-5 mx-auto">
+        <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">Name</label>
+              <input type="text" class="form-control" >
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn text-white" style="background:green;">Send</button>
+          </form>
+      </div>
+    </div>
+
+    <div class="row m-4 p-5">
+        <div class="col border p-3">
+            <ul>
+                <li>
+                    ECP SECRETARIAT ISLAMABAD
+                    Address: 
+                    Election Commission Of Pakistan Secretariat, Election House, Constitution Avenue, G-5/2, Islamabad</li>
+                
+            </ul>
+           <hr>
+            <ul>
+                <li>
+                    PEC OFFICE PUNJAB 
+
+                    Address: 
+                    Office of PEC (Provincial Election Commissioner) Punjab, 10-Court Street, Lahore, Punjab   
+                </li>
+                
+            </ul>
+        </div>
+        <div class="col border p-3">
+            <ul>
+                <li>
+                    Office Telephone: (+92)(51) (9205611)</br>
+Fax: (+92)(51) (9205300)
+                </li>
+                <hr>
+              
+            </ul>
+            <ul>
+                <li>
+                    Office Telephone: 04299214684
+Fax: 04299211027
+                </li>
+                <hr>
+              
+            </ul>
+        </div>
+    </div>
+
+    <h4 class="p-5">For any complaint and suggestion please contact us on Email ID:  info@ecp.gov.pk</h4>
+</div>
+{% endblock %}

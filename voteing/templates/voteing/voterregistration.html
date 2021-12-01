@@ -1,0 +1,230 @@
+{% extends "../master.html" %}
+{% block title %}Registration{% endblock %}
+{% load static %}
+
+{% block css%}
+
+<style>
+   
+
+      .active_tab1 {
+          background-color: #fff !important;
+          color: #333 !important;
+          font-weight: 600px !important;
+      }
+
+      .inactive_tab1 {
+          background-color: #f5f5f5 !important;
+          color: #333 !important;
+          cursor: not-allowed !important;
+      }
+
+      .has-error {
+          border-color: #cc0000;
+          background-color: #ffff99;
+      }
+</style>
+{% endblock %}
+{% block content %}
+
+{% ifequal error "usernamealredyexist" %}
+<script>
+    alert('Username alredy exist');
+    
+</script>
+{% endifequal %}
+ 
+    <div class="container p-5">
+        <h2 class="text-center  text-uppercase ">Voter Registration</h2>
+    
+    <h4 class=" p-3 rounded " style="background-color: rgb(238, 137, 159);">Please Verify that you are eligible to register to vote by clicking on all checkboxes to the left of statements below and answering yes of the questions.In order to be elegible for the voter registration , you must meet each of the following requirments also be the citizen of Pakistan , and be 18 years old by next general election.</h4>
+
+</div>
+
+<div class="container">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active active_tab1" id="verify_detail_button" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Verify Detail</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link inactive_tab1" id="personal_detail_button" data-bs-toggle="" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Personal Detail</button>
+    </li>
+
+  </ul>
+
+
+ <!-- tab content start -->
+
+
+
+  <div class="tab-content" id="myTabContent">
+ 
+    <!-- first tab pan -->
+    <div class="tab-pane fade show active" id="verify_detail_pane" role="tabpanel" aria-labelledby="home-tab">
+      <div class="container">
+        <span class="text-danger" id="chk"></span>
+        <form class="p-5" method="post" action="{% url 'reg_form' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" id="resident" name="resident">
+            <label class="form-check-label" for="exampleCheck1">I am resident of Pakistan</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck2" name="rights">
+            <label class="form-check-label" for="exampleCheck2">I have not been Adjudicated with my voteing rights revoked.</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck3" name="convienced">
+            <label class="form-check-label" for="exampleCheck3">I have not been convided of a felony,or my cicil rights has been restored.</label>
+          </div>
+          <fieldset class="form-group p-3">
+            <ul style="list-style-type: circle;">
+              <li>Would you have 18 years old for next general election.</li>
+            </ul>
+            <div class="row">
+              <!-- <legend class="col-form-label col-sm-2 pt-0">Radios</legend> -->
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="old" id="exampleCheck4" value="option1" >
+                  <label class="form-check-label" for="gridRadios1">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="old" id="exampleCheck4-1" value="option2">
+                  <label class="form-check-label" for="gridRadios2">
+                    No
+                  </label>
+                </div>
+               
+              </div>
+            </div>
+          </fieldset>
+          
+          <button type="button" class="btn btn-success" id="verify_detail_next">Next</button>
+        
+      </div>
+    </div>
+ <!-- end first tab pan -->
+
+ <!-- second tab pan -->
+
+    <div class="tab-pane fade" id="personal_detail_pane" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 offset-md-2 p-5">
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" name="name">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div>
+           
+              <div class="form-group">
+                <label for="edat">Date Of Birth</label>
+                <input type="date" class="form-control" id="edat" aria-describedby="emailHelp" placeholder="Enter Date" name="dob">
+                
+              </div>
+              <div class="form-group">
+                <label for="ecnic">CNIC</label>
+                <input type="text" class="form-control" id="ecnic" aria-describedby="emailHelp" placeholder="Enter CNIC" name="cnic">
+               
+              </div>
+
+            
+
+              <div class="form-group">
+                <label for="">constituency</label>
+                <select class="form-control" name="const">
+                  <option>NA-55</option>
+                  <option>NA-66</option>
+              
+                </select>
+                
+              </div>
+
+              <div class="form-group p-2">
+                <label for="exampleFormControlFile1">image</label>
+                
+                <input type="file" class="form-control-file"  name="photox" >
+            
+            
+                
+            
+                
+              </div>
+
+              <button type="button" class="btn btn-success" id="personal_detail_previous">Previous</button>
+              <button type="submit" class="btn btn-success" id="personal_detail_next">Submit</button>
+            </form>
+          </div>
+          <!-- <div class="col"></div> -->
+        </div>
+      </div>
+
+    </div>
+
+ <!-- end second tabpan -->
+
+
+
+
+  </div>
+
+
+  <!-- tab content end -->
+
+</div>
+    
+  
+
+{% endblock %}
+
+{% block jss%}
+<script>
+  // start ready
+  $(document).ready(function(){
+   $('#verify_detail_next').click(function(){
+
+     if($('#exampleCheck1').is(':checked') && $('#exampleCheck2').is(':checked') && $('#exampleCheck3').is(':checked') && ($('#exampleCheck4').is(':checked') || $('#exampleCheck4-1').is(':checked'))){
+      $('#verify_detail_button').removeClass('active active_tab1');
+      $('#verify_detail_pane').removeClass('show active');
+      $('#verify_detail_button').addClass('inactive_tab1');
+
+      $('#personal_detail_button').removeClass('inactive_tab1');
+      $('#personal_detail_button').addClass('active active_tab1');
+      $('#personal_detail_pane').addClass('show active');
+      }else{
+              $('#chk').text("Please Check All Boxes.");
+           }
+     
+   })
+
+  //  end verify detail
+
+  $('#personal_detail_previous').click(function(){
+    $('#verify_detail_button').addClass('active active_tab1');
+      $('#verify_detail_pane').addClass('show active');
+      $('#verify_detail_button').removeClass('inactive_tab1');
+
+      $('#personal_detail_button').addClass('inactive_tab1');
+      $('#personal_detail_button').removeClass('active active_tab1');
+      $('#personal_detail_pane').removeClass('show active');
+  })
+ 
+  $('#personal_detail_next').click(function(){
+    $('#verify_detail_button').reClass('active active_tab1');
+      $('#verify_detail_pane').reClass('show active');
+      $('#verify_detail_button').removeClass('inactive_tab1');
+
+      $('#personal_detail_button').reClass('inactive_tab1');
+      $('#personal_detail_button').removeClass('active active_tab1');
+      $('#personal_detail_pane').removeClass('show active');
+  })
+
+   
+  
+  })
+  // end ready
+</script>
+{% endblock%}

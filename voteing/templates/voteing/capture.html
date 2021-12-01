@@ -1,0 +1,28 @@
+{% extends "../master.html" %}
+{% block title %}Cast Vote{% endblock %}
+{% load static %}
+
+{% block css%}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid " style="position: absolute;">
+    <div class="row "  id="typed-strings">
+        <h2 class="text-center text-uppercase p-2 ">Please stand</h2>
+        <h5 class="text-center">Straight</h5>
+        <h5>In front of camera</h5>
+        
+    </div>
+    <p id="typed" class="p-3 ml-5"></p>
+
+</div>
+
+<div class="container text-center" style="margin-top:30vh;">
+    <a href="/open" class="btn btn-lg btn-success">Capture</a>
+</div>
+
+
+
+{% endblock %}

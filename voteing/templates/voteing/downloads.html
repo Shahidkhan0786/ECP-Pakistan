@@ -1,0 +1,31 @@
+{% extends "../master.html" %}
+{% block title %}downloads{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container-fluid bg-warning">
+    <h2 class="text-center p-3">Download</h2>
+</div>
+
+<div class="container p-5">
+    <h3 class="p-3"> Forms for use during current periodical revision of Electoral Rolls:</h3>
+
+    <h3 class="p-2">ECP Annual Report</h3>
+    <ul>
+        <li><a href="#">Annual Report 2018</a></li>
+        <li><a href="#">Annual Report 2019</a></li>
+        <li><a href="#">Annual Report 2020</a></li>
+    </ul>
+
+    <h3 class="p-2">VOTER FORMS:</h3>
+    <ul>
+        <li><a href="#">Form 21: For Registration / Transfer of Vote</a></li>
+        <li><a href="#">Form 22: For Objection / Deletion of Vote</a></li>
+        <li><a href="#">Form 23: For Correction of Particulars</a></li>
+    </ul>
+</div>
+
+<div class="container p-5">
+    <img src="{% static 'images/ann.png'%}" alt="" srcset="">
+</div>
+
+{% endblock %}

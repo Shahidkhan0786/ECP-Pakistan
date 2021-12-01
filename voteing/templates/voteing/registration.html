@@ -1,0 +1,40 @@
+{% extends "../master.html" %}
+{% block title %}Registration{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="container p-5">
+    <h2 class="text-center p-3 text-uppercase ">Register For Vote</h2>
+    <div class="container">
+      <ul>
+        <li><h5>This is available for all national and provencial assembelies.
+          <span style="margin-left: 150px;">
+          یہ تمام قومی اور صوبائی اسمبلی کے لئے دستیاب ہے۔</span>
+        </h5></li>
+        <li><h5>Find Guidance how to register.
+          <span style="margin-left: 450px;">
+            اندراج کرنے کا طریقہ رہنمائی تلاش کریں۔</span>
+        </h5></li>
+      </ul>
+    </div>
+
+    <div class="container p-5">
+    <div class="card text-center">
+      <div class="card-header">
+        Register
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">How To Register</h5>
+        <!-- <p class="card-text">Start Your Vote Registration.</p> -->
+        <a href="/reg_form" class="btn m-3 text-white" style="background-color:green;">Start Your Vote Registration</a>
+      </div>
+      <div class="card-footer text-muted">
+        ECP(Election Comession Pakistan)
+      </div>
+    </div>
+    </div>
+  </div>
+      <!-- Optional JavaScript; choose one of the two! -->
+
+
+
+{% endblock %}
