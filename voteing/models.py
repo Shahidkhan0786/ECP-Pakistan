@@ -1,6 +1,8 @@
+from datetime import date, datetime
 from django.db import models
 from django.db.models.base import Model
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, update_last_login
+from django.http import request
 # Create your models here.
 
 SYMBOL_CHOICES=(
@@ -25,60 +27,61 @@ ELECTION_TYPE=(
 
 
 class symbol(models.Model):
-    symbol_name=models.CharField(choices=SYMBOL_CHOICES,max_length=255)
-    symbol_image=models.ImageField(null=True)
+    symbolName=models.CharField(choices=SYMBOL_CHOICES,max_length=255 ,unique=True)
+    symbolImage=models.ImageField(upload_to='symbols/',null=True)
 
     def __str__(self):
-        return self.symbol_name
+        return self.symbolName
 
 class leader(models.Model):
-    leader_Name= models.CharField(max_length=200)
+    leaderName= models.CharField(max_length=200 ,unique=True)
 
 
     def __str__(self):
-        return self.leader_Name
+        return self.leaderName
 
 
 class constituency(models.Model):
-    constituency=models.CharField(max_length=255)
+    constituency=models.CharField(max_length=255 ,unique=True)
 
     def __str__(self):
         return self.constituency
 
 class seat(models.Model):
-    seat_Name=models.CharField(max_length=255)
-    constituency=models.ForeignKey(constituency ,on_delete=models.CASCADE)
+    seatName=models.CharField(max_length=255 ,unique=True)
+
 
     def __str__(self):
-        return self.seat_Name
+        return self.seatName
    
 
 class Parties(models.Model):
-    party_Name=models.CharField(max_length=200,choices=PARTY_NAME)
-    party_Leader=models.ForeignKey(leader ,on_delete=models.CASCADE)
-    party_Symbol=models.ForeignKey(symbol , on_delete=models.CASCADE)
-    party_Overview=models.CharField(max_length=255)
+    partyName=models.CharField(max_length=200,choices=PARTY_NAME , unique=True)
+    partyLeader=models.ForeignKey(leader ,on_delete=models.CASCADE)
+    partySymbol=models.ForeignKey(symbol , on_delete=models.CASCADE)
+    partyOverview=models.CharField(max_length=255)
 
 
     def __str__(self):
-        return self.party_Name
+        return self.partyName
 
 class add_election(models.Model):
-    election_type=models.CharField(max_length=100,choices=ELECTION_TYPE)
-    start_date=models.DateField(null=True)
-    end_date=models.DateField(null=True)
-    election_rules=models.CharField(max_length=255)
+    electiontype=models.CharField(max_length=100,choices=ELECTION_TYPE)
+    startdate=models.DateTimeField(null=True)
+    enddate=models.DateTimeField(null=True)
+    electionrules=models.CharField(max_length=255)
 
     def __str__(self):
-        return self.election_type
+        return self.electiontype
 
 
 class Candidate(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     party=models.OneToOneField(Parties ,on_delete=models.CASCADE)
-    election=models.OneToOneField(add_election , on_delete=models.CASCADE)
+    election=models.ForeignKey(add_election ,on_delete=models.CASCADE , null=True)
+    
     seat= models.ForeignKey(seat ,on_delete=models.CASCADE , null=True)
-    image=models.FileField()
+    image=models.FileField(upload_to="candidate")
 
     def __str__(self):
         return self.user.username
@@ -86,13 +89,37 @@ class Candidate(models.Model):
 
 class Voters(models.Model):
     user=models.ForeignKey(User , on_delete=models.CASCADE)
-    cnic=models.CharField(max_length=200)
+    cnic=models.CharField(max_length=200 , unique=True)
     constituency=models.CharField(max_length=200)
     # constituency=models.ForeignKey(constituency , on_delete=models.CASCADE)
     dob=models.DateField()
-    image=models.FileField()
+    image=models.FileField(upload_to="voter/")
     status=models.BooleanField(default=False ,null=True ,blank=True)
 
     def __str__(self):
         return self.user.username
+
+
+class news(models.Model):
+    author=models.ForeignKey(User , on_delete=models.CASCADE)
+    datetime=models.DateTimeField(auto_now_add=True , null=True)
+    title=models.CharField(max_length=255)
+    content=models.TextField()
+    image=models.FileField(upload_to='news/')
+    
+    def __str__(self):
+        return self.title
+
+
+
+
+class ElectionReslts(models.Model):
+    vuser=models.CharField(max_length=255 , unique=True)
+    Candidate=models.CharField(max_length=255)
+    party=models.CharField(max_length=255)
+    seat=models.CharField(max_length=255)
+
+
+
+
 

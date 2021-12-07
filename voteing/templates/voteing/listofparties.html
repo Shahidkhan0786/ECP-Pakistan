@@ -1,0 +1,24 @@
+{% extends "../master.html" %}
+{% block title %}Parties List{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container-fluid bg-warning">
+    <h2 class="text-center p-3">List Of Parties</h2>
+</div>
+<div class="container p-4">
+    {% for i in partiesx %}
+    <div class="container mt-2">
+        
+        <div class="d-flex border p-3">
+            <img src="{{i.partySymbol.symbolImage.url}}" alt="John Doe"
+                 class="flex-shrink-0 me-3 mt-3 rounded-circle" style="width:60px;height:60px;">
+            <div>
+                <h4>{{i.partyName}} <small>(Party)</small></h4>
+                <p>{{i.partyOverview}}
+                    </p>
+            </div>
+        </div>
+        </div>
+    {% endfor %}    
+</div>
+{%endblock%}

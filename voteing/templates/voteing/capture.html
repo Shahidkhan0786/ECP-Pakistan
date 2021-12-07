@@ -1,5 +1,5 @@
 {% extends "../master.html" %}
-{% block title %}Cast Vote{% endblock %}
+{% block title %}Capture{% endblock %}
 {% load static %}
 
 {% block css%}
@@ -20,7 +20,9 @@
 </div>
 
 <div class="container text-center" style="margin-top:30vh;">
-    <a href="/open" class="btn btn-lg btn-success">Capture</a>
+    <!-- <a href="/open/{{candidate}}/{{voter}}" class="btn btn-lg btn-success">Capture</a> -->
+    <a href="/checkcnic/{{candidate}}" class="btn btn-lg btn-success">Go</a>
+
 </div>
 
 

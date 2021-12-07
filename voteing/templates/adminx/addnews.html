@@ -1,0 +1,40 @@
+{% extends "../index1.html" %}
+
+{% block title %}Add news{% endblock %}
+{% block content %}
+<div class="container p-5">
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }} p-3" {% endif %} >{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+<form action="{% url 'addnews' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Title</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter title" name="tit">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Content</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="cont"></textarea>
+  </div>
+
+
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Image</label>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="img">
+  </div>
+
+
+
+
+
+
+  <button type="submit" class="btn " style="background:green; color:white;">Submit</button>
+
+ 
+    </form>
+</div>
+{% endblock %}

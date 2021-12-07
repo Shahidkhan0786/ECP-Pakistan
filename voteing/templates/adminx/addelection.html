@@ -3,6 +3,13 @@
 {% block title %}Add Election{% endblock %}
 {% block content %}
 <div class="container p-5">
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }} p-3" {% endif %} >{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
 <form action="{% url 'addelection' %}" method="POST">
   {% csrf_token %}
     <div class="form-group">
@@ -16,13 +23,13 @@
 
     <div class="form-group">
       <label for="exampleInputPassword1">Date Of Election</label>
-      <input type="date" class="form-control" id="exampleInputPassword1" placeholder="start" name="start">
+      <input type="datetime-local" class="form-control" id="exampleInputPassword1" placeholder="start" name="start">
     </div>
 
     
     <div class="form-group">
         <label for="exampleInputPassword1">End Date</label>
-        <input type="date" class="form-control" id="exampleInputPassword1" placeholder="start" name="end">
+        <input type="datetime-local" class="form-control" id="exampleInputPassword1" placeholder="start" name="end">
       </div>
 
     <div class="form-group">

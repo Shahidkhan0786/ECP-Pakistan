@@ -4,18 +4,28 @@
 {% block content %}
 
 <div class="container p-5">
-    <form>
+  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }} p-3" {% endif %} >{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    <form method="post" action="/addparty/">
+      {% csrf_token %}
         <div class="form-group">
             <label for="exampleInputPassword1">Party Name</label>
             <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="name">
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Party Leader</label>
+            
             <select class="form-control" id="exampleFormControlSelect1" name="leader">
               {% for i in data%}
-              <option value={{i}}>{{i}}</option>
+              <option value='{{i}}'>{{i}}</option>
               {%endfor%}
             </select>
+            <small id="emailHelp" class="form-text text-warning">if you don,t find party leader here please add it.</small>
         </div>
     
         
@@ -24,17 +34,19 @@
           
             <div class="form-group">
               <label for="exampleFormControlFile1">Party Symbol</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              
+              <select class="form-control" id="exampleFormControlSelect1" name="symb">
                 {% for s in symbol %}
-                <option value={{s}}>{{s}}</option>
+                <option value='{{s}}'>{{s}}</option>
                 {% endfor%}
               
               </select>
+              <small id="emailHelpx" class="form-text text-warning">if you don,t find party symbol here please add it.</small>
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Party OverView</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="partyover"></textarea>
             </div>
           
     

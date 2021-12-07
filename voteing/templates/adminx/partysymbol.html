@@ -1,0 +1,39 @@
+{% extends "../index1.html" %}
+
+{% block title %}Add Party Symbol{% endblock %}
+{% block content %}
+
+<div class="container p-5">
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }} p-3" {% endif %} >{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+    <form method="post" action="{% url 'addpartysymbol' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputPassword1">Symbol Name</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="sname">
+        </div>
+    
+    
+        <div class="form-group p-2">
+            <label for="exampleFormControlFile1">image</label>
+            
+            <input type="file" class="form-control-file"  name="simgx" >
+        
+        
+            
+        
+            
+          </div>
+          
+    
+        
+        <button type="submit" class="btn " style="background-color: green;color:white;">add</button>
+    </form>
+    </div>
+
+{% endblock %}

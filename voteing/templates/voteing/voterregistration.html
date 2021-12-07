@@ -136,8 +136,9 @@
               <div class="form-group">
                 <label for="">constituency</label>
                 <select class="form-control" name="const">
-                  <option>NA-55</option>
-                  <option>NA-66</option>
+                  {% for i in seat%}
+                  <option>{{i.seatName}}</option>
+                  {% endfor %}
               
                 </select>
                 

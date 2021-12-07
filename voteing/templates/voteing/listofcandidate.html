@@ -1,0 +1,25 @@
+{% extends "../master.html" %}
+{% block title %}Candidate List{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container-fluid bg-warning">
+    <h2 class="text-center p-3">List Of Candidates</h2>
+</div>
+<div class="container p-4">
+    {% for i in candidate %}
+    <div class="container mt-2">
+        
+        <div class="d-flex border p-3">
+            <img src="{{i.image.url}}" alt="John Doe"
+                 class="flex-shrink-0 me-3 mt-3 rounded-circle" style="width:60px;height:60px;">
+            <div>
+                <h4>{{i.user.username}} <small>(Candidate)</small></h4>
+                <p>{{i.party.partyName}}</p>
+                <p>{{i.election.electiontype}}</p>
+                <p>{{i.seat.seatName}}</p>    
+            </div>
+        </div>
+        </div>
+    {% endfor %}    
+</div>
+{%endblock%}

@@ -1,0 +1,42 @@
+{% extends "../master.html" %}
+{% block title %}Check{% endblock %}
+{% load static %}
+
+{% block css%}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid " style="position: absolute;">
+    <div class="row "  id="typed-strings">
+        <h2 class="text-center text-uppercase p-2 ">Please Enter</h2>
+        <h5 class="text-center">Your</h5>
+        <h5>CNIC For Further procedure</h5>
+        
+    </div>
+    <p id="typed" class="p-3 ml-5"></p>
+
+</div>
+
+<div class="container  " style="margin-top:30vh;">
+    <form action="{% url 'open' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{cid}}" name="cid">
+        <div class="form-row">
+        <div class="row">
+          <div class="col-md-6 offset-md-2">
+            <input type="text" class="form-control" placeholder="Voter Cnic" name="cnic">
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary mb-2" style="background-color: green; color:white;">Confirm </button>
+          </div>
+        </div>
+        </div>
+      </form>
+    
+</div>
+
+
+
+{% endblock %}

@@ -18,8 +18,15 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Adds site header, site title, index title to the admin side.
+admin.site.site_header = 'ECP'
+admin.site.site_title = 'ECP'
+admin.site.index_title = 'Welcome To ECP'
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+
+    path('superuser/', admin.site.urls),
+
    
     path('', include('voteing.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -4,45 +4,66 @@
 {% block content %}
 
 <div class="container p-5">
-    <form>
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }} p-3" {% endif %} >{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+    <form method="post" action="{% url 'addcandidate' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleFormControlSelect0">Election</label>
+        <select class="form-control" id="exampleFormControlSelect0" name="elec">
+          {% for e in election%}
+          <option value='{{e}}'>{{e}}</option>
+          {% endfor %}
+        </select>
+    </div>
+
+
         <div class="form-group">
             <label for="exampleInputPassword1">Candidate Name</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="">
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="cnam">
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Party</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <select class="form-control" id="exampleFormControlSelect1" name="partyn">
+              {% for p in pn%}
+              <option value='{{p}}'>{{p}}</option>
+              {% endfor %}
             </select>
         </div>
-
+        
         <div class="form-group">
             <label for="exampleFormControlSelect1">Symbol</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <select class="form-control" id="exampleFormControlSelect1" name="psym">
+              {% for s in snam %}
+              <option value="{{s}}">{{s}}</option>
+              {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
             <label for="exampleFormControlSelect1">Seat</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <select class="form-control" id="exampleFormControlSelect1" name="psea">
+              {% for se in seat %}
+              <option value="{{se}}">{{se}}</option>
+              {% endfor %}
             </select>
         </div>
     
-        
+        <div class="form-group p-2">
+          <label for="exampleFormControlFile1">image</label>
+          
+          <input type="file" class="form-control-file"  name="imgx" >
+      
+      
+          
+      
+          
+        </div>
        
 
           
@@ -50,7 +71,7 @@
           
     
         
-        <button type="submit" class="btn " style="background-color: green;color:white;">Submit</button>
+        <button type="submit" class="btn " style="background-color: green;color:white;">add</button>
     </form>
     </div>
 
