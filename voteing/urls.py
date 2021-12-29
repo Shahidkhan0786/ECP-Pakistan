@@ -40,17 +40,31 @@ urlpatterns = [
     path('open/' , views.camera_Open , name="open"),
     path('instructions/' ,views.show_Instructions , name="instructions"),
     path('homourecp/' , views.honourable__ecp , name="honourableecp"),
-    path('ballet/' , views.ballet , name="ballet"),
+    path('ballet/<str:se>/' , views.ballet , name="ballet"),
 
     path('electionresult/' , views.electionResult , name="electionresult"),
-    path('checkcnic/<int:cid>/' , views.checkCnic , name="cniccheck"),
+    path('checkcnic/' , views.checkCnic , name="cniccheck"),
+    path('cnic/' , views.cniccheck , name="cnicchk"),
+    path('vdetail/<int:id>' , views.VoterDetail , name="vdetail"),
     path('listof/' , views.partiesList , name="partieslist"),
     path('listofsymbol/' , views.symbolList , name="symbollist"),
     path('listofcandidate/' , views.candidateList , name="candidatelist"),
     path('checkreg/' , views.checkRegestration , name="ckeckreg"),
+    path('listofpast/' , views.pastElections , name="pastelectionlist"),
+    path('electresult/', views.electionResults , name="electionresult"),
+    path('newsdetail/<int:id>' , views.news_detail , name="newsdetail"),
+    path('res/' , views.finalresult , name="finalresults"),
+
+
+    path('seatslst/<int:id>' , views.seatlist , name="seatlist"),
     # //admin
     path('chk_reg' , views.check_voter_reg , name="checkvoterreg"),
     path('show-res',views.results, name="show-results"),
     path('news/' , views.addNews , name='addnews'),
+    path('shownews/' , views.showNews ,name="shownews"),
+    path('addupdates/' ,views.add_Updates,name="addupdate"),
+
+
+    # path('checkk/' , views.groupp),
    
 ]

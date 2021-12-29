@@ -1,0 +1,31 @@
+{% extends "../master.html" %}
+{% block title %}Result{% endblock %}
+{% block content %}
+<div class="container-fluid bg-warning">
+    <h2 class="text-center p-3">Result Of Elections</h2>
+</div>
+
+
+<div class="container p-5">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Seat</th>
+            <th scope="col">Party</th>
+            <th scope="col">Votes</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data%}
+          <tr>
+            <th scope="row">{{i.seat}}</th>
+            <td>{{i.party}}</td>
+            <td>{{i.count}}</td>
+            <!-- <td>{{i.max}}</td> -->
+          </tr>
+         {%endfor%}
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}

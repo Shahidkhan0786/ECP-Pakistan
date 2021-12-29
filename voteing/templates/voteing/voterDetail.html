@@ -1,0 +1,66 @@
+{% extends "../master.html" %}
+{% block title %}Voter Detail{% endblock %}
+{% load static %}
+
+{% block css%}
+
+{% endblock %}
+
+{% block content %}
+<div class="container p-5">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <h2 class="text-center">VOTER DETAIL</h2>
+              <tr>
+                
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Name</td>
+                <td></td>
+                <td>{{data.user.username}}</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Cnic</td>
+                <td></td>
+                <td>{{data.cnic}}</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Seat</td>
+                <td></td>
+                <td>{{data.constituency}}</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>DOB</td>
+                <td></td>
+                <td>{{data.dob}}</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>Pic</td>
+                <td></td>
+                <td><img src="{{data.image.url}}" alt="" height="100px" width="100px"></td>
+              </tr>
+              <tr class="p-3">
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td><a class="btn btn-success p-3" href="{% url 'seatlist' data.id %}">Cast Vote</a></td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+    </div>
+</div>
+
+{% endblock %}

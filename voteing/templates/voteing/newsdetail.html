@@ -1,0 +1,47 @@
+{% extends "../master.html" %}
+{% block title %}News Detail{% endblock %}
+{% load static %}
+{% block content %}
+<div class="container-fluid bg-warning">
+    <h2 class="text-center p-5">News Detail</h2>
+</div>
+
+<div class="container">
+  
+
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }} p-3" {% endif %} >{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+
+
+
+</div>
+
+
+<div class="container-fluid ">
+  <div class="container ">
+    <div id="main-content" class="blog-page">
+          <img src="{{detail.image.url}}" alt="" style="width:90%;height:400px;">
+
+        </div>
+    <div class="container">
+      <h1 class="p-3">{{detail.title}}</h1>
+      <div class="container">
+        <p class="p-3">
+          {{detail.content}}
+        </p>
+
+        <div class="fb-comments" data-href="http://127.0.0.1:8000/newsdetail/{{detail.id}}" data-width="" data-numposts="5"></div>
+      </div>
+    </div>    
+    </div> 
+  </div>
+
+</div>
+
+
+  {% endblock %}

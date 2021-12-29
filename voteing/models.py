@@ -77,7 +77,7 @@ class add_election(models.Model):
 
 class Candidate(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    party=models.OneToOneField(Parties ,on_delete=models.CASCADE)
+    party=models.ForeignKey(Parties ,on_delete=models.CASCADE ,blank=True , null=True)
     election=models.ForeignKey(add_election ,on_delete=models.CASCADE , null=True)
     
     seat= models.ForeignKey(seat ,on_delete=models.CASCADE , null=True)
@@ -102,7 +102,7 @@ class Voters(models.Model):
 
 class news(models.Model):
     author=models.ForeignKey(User , on_delete=models.CASCADE)
-    datetime=models.DateTimeField(auto_now_add=True , null=True)
+    datetime=models.DateTimeField(auto_now=True , null=True)
     title=models.CharField(max_length=255)
     content=models.TextField()
     image=models.FileField(upload_to='news/')
@@ -119,7 +119,30 @@ class ElectionReslts(models.Model):
     party=models.CharField(max_length=255)
     seat=models.CharField(max_length=255)
 
+    def __str__(self):
+        
+        return self.seat
+
+class Updates(models.Model):
+    author=models.ForeignKey(User, on_delete=models.CASCADE)
+    title=models.CharField(max_length=250)
+    content=models.TextField()
+    date=models.DateTimeField(auto_now_add=True , null=True)
+
+    def __str__(self):
+        return self.title
 
 
 
+class Contact(models.Model):
+    emil=models.EmailField()
+    name=models.CharField(max_length=250)
+    message=models.TextField()
 
+    def __str__(self):
+        return self.message
+
+
+class download(models.Model):
+    form=models.FileField(upload_to="form/")
+    

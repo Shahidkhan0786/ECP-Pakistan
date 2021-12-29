@@ -1,0 +1,66 @@
+{% extends "../master.html" %}
+{% block title %}Available Seats{% endblock %}
+{% load static %}
+
+{% block css%}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 p-5">
+            <div class="card text-center">
+                <div class="card-header">
+                   <p>Seats</p>
+                  </div>
+                <div class="card-body">
+                  <ul style="list-style-type: none;">
+                    {%for i in seat%}
+                    <a href="/ballet/{{i.seatName}}">
+                      <li>
+                          <div class="container">
+                           
+                              <div class="row">
+                                    
+                                  <div class="col-md-8 bg-success text-white">
+                                                                  
+                                        <p class="float-start">
+                                            {{i.seatName}}
+                                        </p>
+                                        
+                                        
+                                  </div>
+                                  
+                                  
+                                  
+                                </div>
+                            
+                              
+                          </div>
+                      </li>
+                    </a> 
+                     
+                      <hr>
+                    {%endfor%} 
+                   
+                      
+                      
+                    
+                  </ul>
+                </div>
+                <div class="card-footer text-muted">
+                 
+                </div>
+              </div>
+        </div>
+        <!-- endone ballet -->
+        
+    
+        
+    </div>
+</div>
+
+
+{% endblock %}

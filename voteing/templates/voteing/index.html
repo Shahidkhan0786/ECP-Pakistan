@@ -1,6 +1,8 @@
 {% extends "../master.html" %}
 {% block title %}Home{% endblock %}
 {% load static %}
+
+
 {% block content %}
 <div class="container">
   {% if messages %}
@@ -12,8 +14,8 @@
   {% endif %}
     <div class="row p-5">
         <div class="col">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
+                <div class="row g-0 ">
                   <div class="col-md-4">
                     <img src="{% static 'images/box1.jpg'%}" class="img-fluid rounded-start" alt="...">
                   </div>
@@ -23,40 +25,40 @@
                       <p class="card-text">
                         <ul class="a">
                             <li><a href="/updates">Click for Latest Updates.</a></li>
-                            <li><a href="/regestration">Voter Registration.</a></li>
+                            <!-- <li><a href="/regestration">Voter Registration.</a></li> -->
                             <li><a href="/castvote">Cast Vote.</a></li>
                           </ul>
                       </p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      
                     </div>
                   </div>
                 </div>
               </div>
         </div>
         <div class="col">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
                     <img src="{% static 'images/news.png'%}" class="img-fluid rounded-start" alt="...">
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <h5 class="card-title">Featued News</h5>
+                      <h5 class="card-title">News</h5>
                       <p class="card-text">
                         <ul class="a">
-                            <li><a href="#">Featured News.</a></li>
-                            <li><a href="#">List Of News.</a></li>
                             
+                            <li><a href="/shownews">List Of News.</a></li>
+                            <li><a href="/updates">List Of Updates.</a></li>
                           </ul>
                       </p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      
                     </div>
                   </div>
                 </div>
               </div>
         </div>
         <div class="col">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
                     <img src="{% static 'images/box1.jpg'%}" class="img-fluid rounded-start" alt="...">
@@ -66,12 +68,12 @@
                       <h5 class="card-title">Past Elections</h5>
                       <p class="card-text">
                         <ul class="a">
-                            <li><a href="#">List Of Past Elections.</a></li>
-                            <li><a href="#">Result Of Past Elections..</a></li>
+                            <li><a href="/res">Election Result.</a></li>
+                            <li><a href="/electresult">List Of Elections Results.</a></li>
                             
                           </ul>
                       </p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      
                     </div>
                   </div>
                 </div>
@@ -82,7 +84,7 @@
 
     <div class="row p-5">
         <div class="col">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
                     <img src="{% static 'images/contactus.jpg'%}" class="img-fluid rounded-start" alt="..." height="100px;">
@@ -92,19 +94,19 @@
                       <h5 class="card-title">Contact Us</h5>
                       <p class="card-text">
                         <ul class="a">
-                            <li><a href="#">ecp@gmail.com</a></li>
+                            <li><a href="mailto:ecp@gmail.com">ecp@gmail.com</a></li>
                             <li><a href="#">00360030909.</a></li>
                             
                           </ul>
                       </p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      
                     </div>
                   </div>
                 </div>
               </div>
         </div>
         <div class="col">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
                     <img src="{% static 'images/ecp-logo.jpg'%}" class="img-fluid rounded-start" alt="...">
@@ -119,14 +121,14 @@
                             
                           </ul>
                       </p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                     
                     </div>
                   </div>
                 </div>
               </div>
         </div>
         <div class="col">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
                     <img src="{% static 'images/box1.jpg'%}" class="img-fluid rounded-start" alt="...">
@@ -136,12 +138,12 @@
                       <h5 class="card-title">For Voters</h5>
                       <p class="card-text">
                         <ul class="a">
-                            <li><a href="/instructions">How To Register</a></li>
+                            <!-- <li><a href="/instructions">How To Register</a></li> -->
                             <li><a href="{% url 'ckeckreg' %}">Check Your Registration.</a></li>
                             
                           </ul>
                       </p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                 
                     </div>
                   </div>
                 </div>
@@ -152,7 +154,7 @@
 
     <div class="row p-5">
         <div class="col-md-4">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
                     <img src="{% static 'images/partiess.jpg'%}" class="img-fluid rounded-start" alt="..." height="100px;">
@@ -168,7 +170,7 @@
                             
                           </ul>
                       </p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      
                     </div>
                   </div>
                 </div>

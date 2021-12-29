@@ -1,8 +1,10 @@
 
+from django.db.models.aggregates import Max
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from voteing.models import ELECTION_TYPE, Voters,symbol,seat,Candidate,Parties,news
+from voteing.models import Contact
+from voteing.models import ELECTION_TYPE, Voters,symbol,seat,Candidate,Parties,news,Updates
 from voteing.models import constituency,add_election as addelection,leader,ElectionReslts
 import cv2
 import os
@@ -14,7 +16,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as log, logout, login
-
+from django.db.models import Count,Max
 def index(request):
 
     return render(request , 'voteing/index.html')
@@ -64,7 +66,7 @@ def adminlogout(request):
 
 def admin_Dash(request):
     
-    return render(request , 'index1.html')
+    return render(request , 'adminx/addelection.html')
 
 def add_election(request):
     error=""
@@ -158,24 +160,39 @@ def add_Candidate(request):
         cname=request.POST['cnam']
         celec=request.POST['elec']
         img=request.FILES['imgx']
-        
         try:
+            usr=""
             try:
-                usr=User.objects.create(username=cname , email="" , password="")
+                usr=User.objects.get(username=cname)
             except:
                 pass
-            prty=Parties.objects.get(partyName=pnam)
-            syy=symbol.objects.get(symbolName=psymb)
-            se=seat.objects.get(seatName=pseat)
-            elec=addelection.objects.get(electiontype=celec)
-            
-            can=Candidate(user=usr , party=prty,election=elec,seat=se,image=img)
-            can.save()
-            messages.success(request , "Candidate added successfully")
-            return redirect('addcandidate')
+            if(not usr):
+                usr=User.objects.create(username=cname , email="" , password="")
+            else:
+                pass
+
         except:
-            messages.error(request , "Maybe candidate is already added")
+            
+            messages.error(request , "Error in fetch or create user")
             return redirect('addcandidate')
+        
+
+        prty=Parties.objects.get(partyName=pnam)
+        syy=symbol.objects.get(symbolName=psymb)
+        se=seat.objects.get(seatName=pseat)
+        elec=addelection.objects.get(electiontype=celec)
+        
+        can=Candidate(user=usr , party=prty,election=elec,seat=se,image=img)
+        can.save()
+        messages.success(request , "Candidate added successfully")
+        return redirect('addcandidate')
+        
+        
+        # try:
+            
+        # except:
+        #     messages.error(request , "Maybe candidate is already added")
+        #     return redirect('addcandidate')
             
     
     d={'pn':da, 'snam':sym,'seat':se,'election':elec}
@@ -215,14 +232,37 @@ def about_Parties(request):
 
 
 def about_Updates(request):
-    return render(request , 'voteing/latestupdate.html')
+    up=Updates.objects.all()
+    d={"updates":up}
+    return render(request , 'voteing/latestupdate.html', d)
 
 
 def Downloads(request):
+
     return render(request , 'voteing/downloads.html')
 
 
 def contact_Us(request):
+
+    if request.method == "POST":
+        email= request.POST['email']
+        nam= request.POST['name']
+
+        mess = request.POST['mesge']
+             
+        # image = request.FILES['img'] 
+     
+    
+        try:
+            
+            voter=Contact(emil=email ,name=nam,message=mess)
+            voter.save()
+            messages.success(request ,'message send successfully ')
+            return redirect('/contact')
+            # pathh="C:\Users\Shahid\Desktop\vote\ECP\uploads"
+        except:
+            messages.error(request ,'error in sending meaage')
+            return redirect('/contact')
     return render(request , 'voteing/contactus.html')
 
 
@@ -231,7 +271,7 @@ def voter_Registration(request):
 
 
 def voter_reg_form(request):
-    error=""
+    
 
     se=seat.objects.all() 
     if request.method == "POST":
@@ -255,16 +295,19 @@ def voter_reg_form(request):
             try:
                 user = User.objects.create_user(username=name, email="", password="")
             except:
-                error="usernamealredyexist"
-                return redirect({'error':error})
+                
+                messages.error(request, "User cannot save properly")
+                return redirect('/reg_form')
             voter=Voters(user=user ,cnic=cni,constituency=cons,dob=dob,image=image)
             voter.save()
+            messages.success(request, "voter in saving successfully")
+            return redirect('/reg_form')
             # pathh="C:\Users\Shahid\Desktop\vote\ECP\uploads"
         except:
-            error="usernamealredyexist"
-            pass
+            messages.error(request ,  "Error in saving voter")
+            
  
-    data={'error':error , 'seat':se}
+    data={'seat':se}
     print(data)
     return render(request , 'voteing/voterregistration.html',data )
     # dic = {'error': error}
@@ -278,36 +321,51 @@ def cast_Vote(request):
 def capture(request ,id):
     vid=request.user.id
     cascan = id
-    
+    request.session['can-id'] = id
     d={'candidate':cascan , 'voter':vid}
     return render(request,'voteing/capture.html' , d)
 
 
+def cniccheck(request):
+    if request.method=="POST":
+        # cid=request.POST['cid']
+        try:
+            cnic=request.POST['cnic']
+            print(cnic)
+            usr=Voters.objects.get(cnic = cnic)
+           
+            # messages.success(request , "You are eligible for vote casting")
+            idd=usr.id
+            return redirect('vdetail' , id=idd)
+            # return redirect('seatlist', id=idd)
+        except:
+            messages.error(request , "First register yourself")
+            return redirect('home')
+    else:
+        return redirect('/')
+
+def VoterDetail(request ,id):
+    vot=Voters.objects.get(id = id)
+    print(vot.constituency)
+    d={'data':vot}
+    return render(request , 'voteing/voterDetail.html',d)
 
 def camera_Open(request):
     cnic=""
     cid=""
-    if request.method=="POST":
-        try:
-            cnic=request.POST['cnic']
-            usr=Voters.objects.get(cnic = cnic)
-        except:
-            return redirect('reg_form')
-
-
-    else:
-        return redirect("/home")
-    if cnic:
-        pass
-    else:
-        return redirect('/home')    
+    vid=""
+    
+    cid=request.session['can-id']
+    vid=request.session['vot-id']
+    
+  
     
     print("////////////////")
     print(cid)
 
-    print(cnic)
+    print(vid)
     
-    path = 'C:/Users/Shahid/Desktop/vote/ECP/uploads/voter/'
+    path = 'C:/Users/Shahid/Desktop/vote/vote/ECP/uploads/voter'
     images = []
     personNames = []
     myList = os.listdir(path)
@@ -320,8 +378,11 @@ def camera_Open(request):
     encodeListKnown = faceEncodings(images)
     
     print('All Encodings Complete!!!')
-
-    cap = cv2.VideoCapture(0)
+    try:
+        cap = cv2.VideoCapture(0)
+    except:
+        messages.error(request , "Camera does not open due to some reason")
+        return redirect('/')
     # Check if the webcam is opened correctly
     if not cap.isOpened():
         raise IOError("Cannot open webcam")
@@ -353,27 +414,17 @@ def camera_Open(request):
                 # userx = User.objects.get(id=request.user.id)
                 
                
-                usr=Voters.objects.get(cnic = cnic)
+                usr=Voters.objects.get(id = vid)
               
                
-               
+                print("ccccccccc")
                 cuser=User.objects.get(id=cid)
-             
+                print("ccccccccc")
                 userr=User.objects.values_list('username', flat=True).get(username=usr)
                
                 caa=Candidate.objects.get(user = cuser)
-                print("///////")
-                # print(userr)
-                # print(type(cuser))
-                # print(userr)
-                # print(caa.party)
-                # print(caa.seat)
-                
                
-                # par=Parties.objects.get(partyName = caa.party)
-                # sea=seat.objects.get(seatName=caa.seat)
-                # print(usr)
-                # print(caa.cuser)
+                
                 par=caa.party
                 sea=caa.seat
                 
@@ -398,9 +449,9 @@ def camera_Open(request):
                 
                 
             else:
-               
+                messages.error(request , "not matching")
                 destroy(cap)
-                return redirect('reg_form')
+                return redirect('home')
                 break
 
         cv2.imshow('Webcam', frame)
@@ -425,28 +476,27 @@ def faceEncodings(images):
 
 
 
-def attendance(name):
-    with open('Attendence.csv', 'r+') as f:
-        myDataList = f.readlines()
-        nameList = []
-        for line in myDataList:
-            entry = line.split(',')
-            nameList.append(entry[0])
-        if name not in nameList:
-            time_now = datetime.now()
-            tStr = time_now.strftime('%H:%M:%S')
-            dStr = time_now.strftime('%d/%m/%Y')
-            f.writelines(f'\n{name},{tStr},{dStr}')
+
   
 
 
-def ballet(request):
-    can=Candidate.objects.all()
-
+def ballet(request,se):
+    can=Candidate.objects.filter(seat__seatName__contains = se) 
+    
     print('////////////////////')
+    print(can)
+
     d={'cand':can}
     return render(request , 'voteing/ballet.html' , d)
 
+
+def seatlist(request ,id):
+    vot=Voters.objects.get(id=id)
+    request.session['vot-id'] = id
+    sea=vot.constituency
+    se=seat.objects.filter(seatName=sea)
+    d={'seat':se , 'voter':id}
+    return render(request , 'voteing/seatslist.html',d)
 
 def addNews(request):
     if request.method == "POST":
@@ -479,9 +529,28 @@ def addNews(request):
 
 
 
+def showNews(request):
+    new=news.objects.all()
+    print(new)
+    d={'news':new}
+    return render(request , 'voteing/news.html',d)
+
+
+
+
 def show_Instructions(request):
     return render(request ,'voteing/instructions.html')
 
+def pastElections(request):
+    return render(request , 'voteing/listofpastelection.html')
+
+def electionResults(request):
+    x=ElectionReslts.objects.values('seat' ,'party').annotate(count=Count('id')).order_by('-count')
+    # x2=ElectionReslts.objects.values('seat' ,'party').annotate(max=Max('id')).order_by()
+    print(x)
+    print(x.query)
+    d={'data':x}
+    return render(request , 'voteing/resultofelections.html', d)
 
 
 
@@ -493,7 +562,9 @@ def check_voter_reg(request):
 
 
 def results(request):
-    return render(request , 'adminx/showresult.html')
+    res=ElectionReslts.objects.all()
+    d={'result':res}
+    return render(request , 'adminx/showresult.html',d)
 
 
 
@@ -509,9 +580,9 @@ def electionResult(request):
 
 
 
-def checkCnic(request , cid):
-    d={'cid':cid}
-    return render(request , 'voteing/cniccheck.html' , d) 
+def checkCnic(request):
+
+    return render(request , 'voteing/cniccheck.html') 
 
 
 def partiesList(request):
@@ -563,4 +634,58 @@ def checkRegestration(request):
     
 
 #     return render(request, 'adminx/login.html', dic)
+
+# def groupp(request):
+#     x=ElectionReslts.objects.values('seat' ,'party').annotate(count=Count('id')).order_by()
+    
+#     return HttpResponse(x)
+
+
+def news_detail(request , id):
+    dat=news.objects.all()
+    detail=news.objects.get(id=id)
+    d={'news':dat,'detail':detail}
+    print('/////////')
+    print(id)
+    return render(request , 'voteing/newsdetail.html', d)
+
+
+def add_Updates(request):
+    if request.method == "POST":
+
+        tit= request.POST['tit']
+
+        content = request.POST['cont']
+             
+        # image = request.FILES['img'] 
+     
+    
+        try:
+            try:
+                
+                user = User.objects.get(username= request.user)
+            except:
+                
+                messages.error(request , "error in fetch user")
+                return redirect('/addupdates')
+            voter=Updates(author=user ,title=tit,content=content)
+            voter.save()
+            messages.success(request ,'updates added successfully ')
+            return redirect('/addupdates')
+            # pathh="C:\Users\Shahid\Desktop\vote\ECP\uploads"
+        except:
+            messages.error(request ,'error in saveing updates')
+            return redirect('/addupdates')
+    
+    return render(request , 'adminx/updates.html')
+
+
+
+def finalresult(request):
+    x=ElectionReslts.objects.values('seat' ,'party').annotate(count=Count('id')).order_by('-count').first()
+    # Voters.objects.annotate(winner=Max(''))
+    d={'win':x}
+    print(x)
+    return render(request , 'voteing/result.html',d)
+
 
